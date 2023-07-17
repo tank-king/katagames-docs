@@ -1,11 +1,12 @@
 # Structure of the Game
 
-Before proceeding to programming the game, we need to decide its structure.
-There will be many `scenes` or `states` of the game.
+To ensure a well-organized game, it is essential to determine its structure in advance. 
 
+This entails an initial 
+**_Home_** Screen serving as a gateway to other crucial sections like the **_Game_** screen. These sections, referred
+to as "scenes" (or `states` within the engine), offer a modular framework for streamlined flow and efficient management.
 
 color = #36354A
-
 
 Flowchart for the structure
 
@@ -25,3 +26,5 @@ flowchart TB
 ```
 
 </div>
+
+The 
