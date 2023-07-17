@@ -17,7 +17,7 @@ Similarly, the entire structure of the game can be outlined by the following flo
 <div align="center">
 
 ```mermaid
-flowchart TB
+flowchart LR
     start((start)) --> Home[Home]
     Home --> |play| Game
     Home --> |quit| Stop((Stop))
