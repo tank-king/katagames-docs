@@ -52,6 +52,7 @@ and ensure the same generic behaviors among all the states instead of rewriting 
 <div align="center">
 
 ```mermaid
+
 graph TB
     BaseGameState --> Home
     BaseGameState --> Game
@@ -63,26 +64,47 @@ graph TB
 ## The directory Structure
 
 Writing all the class definitions in one file is going to make it harder to navigate each
-section. This is why we are going to make a separate file for each class
+section. This is why we are going to make a separate file for each class.
+
+Let us make this folder structure in the root folder of your game:
 
 <div align="center">
 
 ```mermaid
-graph TB
+%%{ init : {"flowchart" : { "curve" : "stepAfter" }}}%%
+graph LR
 root[root folder] --> assets
 
 root --> main.py
+root --> globals.py
+root --> src
 
-root --> states[game_states]
+src --> states[game_states]
  
 states --> home.py
 states --> game.py
 states --> win.py
 states --> lose.py
 
-root --> objects[game_objects]
-
-objects
+src --> objects[game_objects]
 
 ```
 </div>
+
+The `main.py` will be the entry point to our game. Running the `main.py` should run
+the entire game.<br>
+The `globals.py` is for defining global states and custom events for the game.
+
+With this setup, we can now begin programming the states.
+But before that, let us open the `globals.py` file and add the following code:
+
+```python
+import pyved_engine as pyv
+
+GameStates = pyv.struct.enum(
+    'home',
+    'game',
+    'win',
+    'lose',
+)
+```
