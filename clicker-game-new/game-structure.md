@@ -59,3 +59,30 @@ graph TB
     BaseGameState --> Lose
 ```
 </div>
+
+## The directory Structure
+
+Writing all the class definitions in one file is going to make it harder to navigate each
+section. This is why we are going to make a separate file for each class
+
+<div align="center">
+
+```mermaid
+graph TB
+root[root folder] --> assets
+
+root --> main.py
+
+root --> states[game_states]
+ 
+states --> home.py
+states --> game.py
+states --> win.py
+states --> lose.py
+
+root --> objects[game_objects]
+
+objects
+
+```
+</div>
