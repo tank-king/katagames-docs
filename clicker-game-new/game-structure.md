@@ -102,9 +102,13 @@ But before that, let us open the `globals.py` file and add the following code:
 import pyved_engine as pyv
 
 GameStates = pyv.struct.enum(
-    'home',
-    'game',
-    'win',
-    'lose',
+    'Home',
+    'Game',
+    'Win',
+    'Lose',
 )
 ```
+
+This code will define the enums `Home`, `Game`,
+`Win` and `Lose`. This will help us map these names to
+their respective Game States later.
