@@ -111,4 +111,5 @@ GameStates = pyv.struct.enum(
 
 This code will define the enums `Home`, `Game`,
 `Win` and `Lose`. This will help us map these names to
-their respective Game States later.
+their respective Game States later. So, we can just reference
+these states as `GameStates.Home`, `GameStates.Game`, etc.

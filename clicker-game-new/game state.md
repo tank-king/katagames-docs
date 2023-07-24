@@ -116,3 +116,50 @@ class Game(pyv.GameTpl):
 
 Game().loop()
 ```
+
+We define a `Game` class which inherits `pyv.GameTpl`. 
+The `GameTpl` is an abstract class that will make handling scenes
+easier for us. We are going to override the following `2` methods:
+- `get_video_mode`
+- `list_game_states`
+
+The `get_video_mode` method will now return the constant
+`pyv.HIGHRES_MODE`. This means the game window will render in
+100% resolution of the screen.
+
+The `list_game_states` method is used to return a mapping, i.e.
+a dictionary with keys referencing the `GameStates` enums, and 
+the corresponding values being the respective states we defined
+in the `game_states` directory.
+
+Now, we need to define the `Game` State in details. But, before
+we do that, we need to note that the current **active** state is
+the `Home` state because of the order of definitions in our mapping
+returned from the `list_game_states` method.
+
+So, to set our current **active** state to the `Game` state,
+we need to add the following code to the `enter` method of the
+`Home` state in `home.py` file:
+
+```python
+import pyved_engine as pyv
+import globals
+
+
+class HomeState(pyv.BaseGameState):
+    def enter(self):
+        pyv.get_ev_manager().post(
+            pyv.EngineEvTypes.StatePush, 
+            state_ident=globals.GameStates.Game
+        )
+
+    def pause(self):
+        pass
+
+    def resume(self):
+        pass
+
+    def release(self):
+        pass
+
+```
