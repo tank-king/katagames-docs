@@ -1,3 +1,10 @@
+[//]: # (style definitions)
+<style>
+    table{
+        width: 100%;
+    }
+</style>
+
 # Defining the `Game` state
 
 As `pyved_engine` uses the `ECS` structure, everything in the engine is going
@@ -75,7 +82,7 @@ that we will clck to get points in the game.<br>
 Before writing the code, let us draw a flowchart for the behavior.
 
 <div align="center">
-<table width="100%">
+<table style="width: 100%">
 <tr>
 <th>class Circle</th>
 <th>flowchart</th>
