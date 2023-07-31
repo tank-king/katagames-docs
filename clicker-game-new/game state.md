@@ -101,6 +101,13 @@ on_mousedown()
 flowchart LR
 b --> a
 ```
+</td>
+<td>
+
+```mermaid
+flowchart LR
+    b --> a
+```
 
 </td>
 </tr>
