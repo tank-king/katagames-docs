@@ -75,22 +75,37 @@ that we will clck to get points in the game.<br>
 Before writing the code, let us draw a flowchart for the behavior.
 
 <div align="center">
+<table width="100%">
+<tr>
+<th>class Circle</th>
+<th>flowchart</th>
+</tr>
+<tr>
+<td>
 
 ```mermaid
 classDiagram
-    Circle
+Circle
 
-    class Circle{
-        <<Event Listener>>
-        radius: float
-        color: Color
-        position: Vector2
-        
-        on_paint()
-        on_update()
-        on_mousedown()
+class Circle{
+<<EventListener>>
+radius: float
+color: Color
+position: Vector2
+
+on_paint()
+on_update()
+on_mousedown()
     }
 
+flowchart LR
+b --> a
 ```
+
+</td>
+</tr>
+</table>
+
+
 </div>
 
