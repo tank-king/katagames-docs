@@ -72,16 +72,9 @@ them. We turn them off in the `release` method.
 
 Let us now define the `Circle` object - the clickable object
 that we will clck to get points in the game.<br>
-Before writing the code, let us draw a flowchart for the behavior.
+Before writing the code, let us draw a class diagram for the Circle class:
 
 <div align="center">
-<table>
-<tr>
-<th>class Circle</th>
-<th>flowchart</th>
-</tr>
-<tr>
-<td>
 
 ```mermaid
 classDiagram
@@ -99,8 +92,9 @@ on_mousedown()
     }
 
 ```
-</td>
-<td>
+</div>
+And here is the flowchart for the stages / states:
+<div align="center">
 
 ```mermaid
 flowchart LR
@@ -109,11 +103,6 @@ flowchart LR
     B --> C
     C --> D[END]
 ```
-
-</td>
-</tr>
-</table>
-
 
 </div>
 
