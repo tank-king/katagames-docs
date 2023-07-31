@@ -98,15 +98,16 @@ on_update()
 on_mousedown()
     }
 
-flowchart LR
-b --> a
 ```
 </td>
 <td>
 
 ```mermaid
 flowchart LR
-    b --> a
+    start --> A
+    A --> B
+    B --> C
+    C --> D[END]
 ```
 
 </td>
