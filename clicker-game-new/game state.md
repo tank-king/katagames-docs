@@ -1,7 +1,6 @@
-
 # Defining the `Game` state
 
-As `pyved_engine` uses the `ECS` structure, everything in the engine is going 
+As `pyved_engine` uses the `ECS` structure, everything in the engine is going
 to be a `Component` object. The `Component` objects can **_post_** other `events` to the system (`Emitter`),
 or both **_post_** and **_listen_** to events (`EventListener`).
 
@@ -9,8 +8,9 @@ Every frame, we need to refresh the screen with a color or a background.
 So let us write a `Background` component which will fill the screen
 with a color per frame.
 
-Let us make a file named `background.py` in `src/game_objects` and 
+Let us make a file named `background.py` in `src/game_objects` and
 add the following code:
+
 ```python
 import pyved_engine as pyv
 
@@ -69,4 +69,28 @@ class GameState(pyv.BaseGameState):
 In the `__init__` method, we have created a list of components.
 And in the `enter` method, we turn on the components, i.e. *activate*
 them. We turn them off in the `release` method.
+
+Let us now define the `Circle` object - the clickable object
+that we will clck to get points in the game.<br>
+Before writing the code, let us draw a flowchart for the behavior.
+
+<div align="center">
+
+```mermaid
+classDiagram
+    Circle
+
+    class Circle{
+        <<Event Listener>>
+        radius: float
+        color: Color
+        position: Vector2
+        
+        on_paint()
+        on_update()
+        on_mousedown()
+    }
+
+```
+</div>
 
