@@ -249,4 +249,3 @@ class GameState(pyv.BaseGameState):
 In the `__init__` method, we have created a list of components.
 And in the `enter` method, we turn on the components, i.e. *activate*
 them. We turn them off in the `release` method.
-
