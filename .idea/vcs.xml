@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+<<<<<<< HEAD
+=======
+    <mapping directory="$PROJECT_DIR$/pyved-engine" vcs="Git" />
+>>>>>>> d22f5f998886ef9d392c694514346c137c2c5765
   </component>
 </project>

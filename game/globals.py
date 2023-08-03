@@ -6,3 +6,7 @@ GameStates = pyv.struct.enum(
     'Win',
     'Lose',
 )
+
+
+class Config:
+    SCREEN_SIZE = None
