@@ -83,15 +83,17 @@ Circle
 class Circle{
 <<EventListener>>
 radius: float
+max_radius: float
 color: Color
 position: Vector2
 
 on_paint()
 on_update()
 on_mousedown()
-    }
+}
 
 ```
+
 </div>
 And here is the flowchart for the stages / states:
 <div align="center">
@@ -103,6 +105,14 @@ flowchart LR
     B --> C
     C --> D[END]
 ```
+
+| state | description                                                                  | transition |
+|-------|------------------------------------------------------------------------------|------------|
+| Start | the object is initialized                                                    | A          |
+| A     | the `radius` increases until it reaches `max_radius`                         | B          |
+| B     | the object waits for user input and keeps decreasing radius with time        | C          |
+| C     | if clicked or timer ends for the object, its `radius` decreases rapidly to 0 | End        |
+| End   | the object is re-initialized into a new position                             |            |
 
 </div>
 

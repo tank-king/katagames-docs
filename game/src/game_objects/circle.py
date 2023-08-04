@@ -1,18 +1,79 @@
+import random
+import time
+
 import pygame.draw
 
 import pyved_engine as pyv
+import globals
 
 
 class Circle(pyv.EvListener):
     def __init__(self):
         super().__init__()
-        self.state = 1
-        self.radius = 20
-        self.color = 'red'
-        self.pos = pygame.display.get_surface().get_size()
+        self.state = None
+        self.radius = None
+        self.max_radius = None
+        self.color = None
+        self.pos = None
+        self.image = None
+        self.current_img_radius = None
+        self.init_time = time.time()
+
+    def turn_on(self):
+        super().turn_on()
+        self.setup()
+
+    def setup(self):
+        self.state = 'Start'
+        self.radius = 0
+        self.max_radius = 50
+        self.color = random.choice(['black', 'blue', 'grey', 'magenta', 'red'])
+        self.image = pygame.transform.smoothscale_by(pygame.image.load(f'assets/images/circle_{self.color}.png'), 0.5)
+        self.init_time = time.time()
+        w, h = self.image.get_size()
+        self.pos = pygame.Vector2(
+            random.randint(w / 2, globals.Config.SCREEN_SIZE.x - w / 2),
+            random.randint(h / 2, globals.Config.SCREEN_SIZE.y - w / 2)
+        )
 
     def on_update(self, ev):
-        self.radius
+        match self.state:
+            case 'Start':
+                self.state = 'A'
+            case 'A':
+                dr = pygame.Vector2(self.radius, self.radius).lerp(
+                    pygame.Vector2(self.max_radius, self.max_radius), 0.25
+                )
+                self.radius = dr.x
+                if self.max_radius - self.radius <= 1:
+                    self.state = 'B'
+            case 'B':
+                # self.init_time = ev.curr_t
+                self.radius -= 0.3
+                if self.radius <= 0:
+                    self.radius = 0
+                    self.state = 'C'
+            case 'C':
+                if self.radius > 1:
+                    dr = pygame.Vector2(self.radius, self.radius).lerp(
+                        pygame.Vector2(0, 0), 0.5
+                    )
+                    self.radius = dr.x
+                else:
+                    self.state = 'End'
+            case 'End':
+                self.setup()
+            case _:
+                pass
+
+    def on_mousedown(self, ev):
+        # print([i for i in dir(ev) if not i.startswith('__')])
+        if pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
+            # print(pygame.Vector2(self.pos).distance_to(ev.pos))
+            self.state = 'C'
 
     def on_paint(self, ev):
-        pygame.draw.circle(ev.screen, self.color, )
+        img = pygame.transform.smoothscale_by(self.image, self.radius / self.max_radius)
+        self.current_img_radius = pygame.Vector2().distance_to(img.get_size()) * 0.4
+        ev.screen.blit(img, img.get_rect(center=self.pos))
+        # pygame.draw.circle(ev.screen, self.color, self.pos, self.radius)
