@@ -6,6 +6,8 @@ import pygame.draw
 import pyved_engine as pyv
 import globals
 
+from game.globals import GameEvents
+
 
 class Circle(pyv.EvListener):
     def __init__(self):
@@ -32,8 +34,8 @@ class Circle(pyv.EvListener):
         self.init_time = time.time()
         w, h = self.image.get_size()
         self.pos = pygame.Vector2(
-            random.randint(w / 2, globals.Config.SCREEN_SIZE.x - w / 2),
-            random.randint(h / 2, globals.Config.SCREEN_SIZE.y - w / 2)
+            random.randint(w // 2, globals.Config.SCREEN_SIZE.x - w // 2),
+            random.randint(h // 2, globals.Config.SCREEN_SIZE.y - w // 2)
         )
 
     def on_update(self, ev):
@@ -71,6 +73,7 @@ class Circle(pyv.EvListener):
         if pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
             # print(pygame.Vector2(self.pos).distance_to(ev.pos))
             self.state = 'C'
+            self.pev(GameEvents.ScoreUpdate, score=10)
 
     def on_paint(self, ev):
         img = pygame.transform.smoothscale_by(self.image, self.radius / self.max_radius)

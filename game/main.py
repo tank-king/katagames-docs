@@ -1,6 +1,6 @@
 import pyved_engine as pyv
 
-from globals import GameStates
+from globals import GameStates, GameEvents
 
 from src.game_states.home import HomeState
 from src.game_states.game import GameState
@@ -11,6 +11,9 @@ from src.game_states.lose import LoseState
 class Game(pyv.GameTpl):
     def get_video_mode(self):
         return pyv.HIGHRES_MODE
+
+    def list_game_events(self):
+        return GameEvents
 
     def list_game_states(self):
         mapping = {

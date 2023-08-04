@@ -7,6 +7,15 @@ GameStates = pyv.struct.enum(
     'Lose',
 )
 
+GameEvents = pyv.game_events_enum((
+    'ScoreUpdate',
+))
+
+
+class SharedVars:
+    SCORE = 0
+    HIGH_SCORE = 0
+
 
 class Config:
     SCREEN_SIZE = None
