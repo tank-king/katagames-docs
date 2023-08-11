@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de0a07ba-be5f-4b63-aab3-e26c640f00d1" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/pyved-engine" beforeDir="false" afterPath="$PROJECT_DIR$/pyved-engine" afterDir="false" />
-    </list>
+    <list default="true" id="de0a07ba-be5f-4b63-aab3-e26c640f00d1" name="Changes" comment="update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691162213988</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update">
+      <created>1691713278101</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1691713278101</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
