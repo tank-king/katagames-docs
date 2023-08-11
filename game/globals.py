@@ -5,6 +5,7 @@ GameStates = pyv.struct.enum(
     'Game',
     'Win',
     'Lose',
+    'Score',
 )
 
 GameEvents = pyv.game_events_enum((

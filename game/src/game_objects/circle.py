@@ -54,7 +54,8 @@ class Circle(pyv.EvListener):
                 self.radius -= 0.3
                 if self.radius <= 0:
                     self.radius = 0
-                    self.state = 'C'
+                    pyv.get_ev_manager().post(pyv.EngineEvTypes.StateChange, state_ident=globals.GameStates.Score)
+                    # self.state = 'C'
             case 'C':
                 if self.radius > 1:
                     dr = pygame.Vector2(self.radius, self.radius).lerp(
@@ -70,10 +71,12 @@ class Circle(pyv.EvListener):
 
     def on_mousedown(self, ev):
         # print([i for i in dir(ev) if not i.startswith('__')])
-        if pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
+        if ev.button == 1 and pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
             # print(pygame.Vector2(self.pos).distance_to(ev.pos))
             self.state = 'C'
-            self.pev(GameEvents.ScoreUpdate, score=10)
+            self.pev(GameEvents.ScoreUpdate, score=+3)
+        else:
+            self.pev(GameEvents.ScoreUpdate, score=-2)
 
     def on_paint(self, ev):
         img = pygame.transform.smoothscale_by(self.image, self.radius / self.max_radius)

@@ -3,6 +3,7 @@ import pyved_engine as pyv
 from src.game_objects.background import ColorBackground
 from src.game_objects.circle import Circle
 from src.game_objects.label import ScoreLabel
+from src.game_objects.game_manager import GameManager
 import globals
 
 
@@ -12,7 +13,8 @@ class GameState(pyv.BaseGameState):
         self.components = [
             ColorBackground(color="#36354A"),
             Circle(),
-            ScoreLabel(0, 0, "Score: 0", 40, "white")
+            GameManager(),
+            ScoreLabel("0", 60, "white"),
         ]
 
     def enter(self):
