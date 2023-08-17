@@ -12,6 +12,12 @@ class Label(pyv.EvListener):
         self.anchor = anchor
         self.text = pygame.font.SysFont(font, size).render(text, True, color)
 
+    def get_rect(self):
+        rect = self.text.get_rect()
+        rect.__setattr__(self.anchor, self.pos)
+        rect.y -= 5
+        return rect
+
     def update_text(self, text):
         self.text = pygame.font.SysFont(self.args[2], self.args[0]).render(text, True, self.args[1])
 
