@@ -6,8 +6,6 @@ from globals import GameStates, GameEvents, Config
 
 from src.game_states.home import HomeState
 from src.game_states.game import GameState
-from src.game_states.win import WinState
-from src.game_states.lose import LoseState
 from src.game_states.score import ScoreState
 
 
@@ -26,8 +24,6 @@ class Game(pyv.GameTpl):
         mapping = {
             GameStates.Game: GameState,
             GameStates.Home: HomeState,
-            GameStates.Win: WinState,
-            GameStates.Lose: LoseState,
             GameStates.Score: ScoreState,
         }
         return GameStates, mapping
