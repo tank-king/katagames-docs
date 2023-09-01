@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="de0a07ba-be5f-4b63-aab3-e26c640f00d1" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/globals.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/globals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clicker-game-new/game state.md" beforeDir="false" afterPath="$PROJECT_DIR$/clicker-game-new/game state.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyved-engine" beforeDir="false" afterPath="$PROJECT_DIR$/pyved-engine" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1692291779739</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="update">
+      <created>1692503875429</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1692503875429</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

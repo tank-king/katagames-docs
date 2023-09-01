@@ -116,3 +116,41 @@ flowchart LR
 
 </div>
 
+The code for the structure can be written as follows in the `on_update` function:
+```python
+def on_update(self, ev):
+    match self.state:
+        case 'Start':
+            self.state = 'A'
+        case 'A':
+            dr = pygame.Vector2(self.radius, self.radius).lerp(
+                pygame.Vector2(self.max_radius, self.max_radius), 0.25
+            )
+            self.radius = dr.x
+            if self.max_radius - self.radius <= 1:
+                self.state = 'B'
+        case 'B':
+            self.radius -= 0.3
+            if self.radius <= 0:
+                self.radius = 0
+                pyv.get_ev_manager().post(pyv.EngineEvTypes.StateChange, state_ident=globals.GameStates.Score)
+        case 'C':
+            if self.radius > 1:
+                dr = pygame.Vector2(self.radius, self.radius).lerp(
+                    pygame.Vector2(0, 0), 0.5
+                )
+                self.radius = dr.x
+            else:
+                self.state = 'End'
+        case 'End':
+            self.setup()
+        case _:
+            pass
+```
+The details of the code is not related to this tutorial, so any other code
+can be used to achieve the same effect. The above code describes the
+flowchart we designed earlier.
+
+
+
+
