@@ -15,7 +15,7 @@ add the following code:
 import pyved_engine as pyv
 
 
-class BackgroundColor(pyv.EvListener):
+class ColorBackground(pyv.EvListener):
     def __init__(self, color):
         super().__init__()
         self.color = color

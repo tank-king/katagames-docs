@@ -14,7 +14,3 @@ GameEvents = pyv.game_events_enum((
 class SharedVars:
     SCORE = 0
     HIGH_SCORE = 0
-
-
-class Config:
-    SCREEN_SIZE = None
