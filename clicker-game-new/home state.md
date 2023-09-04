@@ -1,6 +1,6 @@
 # Defining the Home State
 
-Similar to the Score state, we can define th `Home` state as follows:
+Similar to the Score state, we can define the `Home` state as follows:
 
 ```python
 import sys
