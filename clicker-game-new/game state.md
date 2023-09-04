@@ -150,7 +150,3 @@ def on_update(self, ev):
 The details of the code is not related to this tutorial, so any other code
 can be used to achieve the same effect. The above code describes the
 flowchart we designed earlier.
-
-
-
-
