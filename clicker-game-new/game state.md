@@ -4,6 +4,8 @@ As `pyved_engine` uses the `ECS` structure, everything in the engine is going
 to be a `Component` object. The `Component` objects can **_post_** other `events` to the system (`Emitter`),
 or both **_post_** and **_listen_** to events (`EventListener`).
 
+### Adding Background
+
 Every frame, we need to refresh the screen with a color or a background.
 So let us write a `Background` component which will fill the screen
 with a color per frame.
@@ -70,8 +72,11 @@ In the `__init__` method, we have created a list of components.
 And in the `enter` method, we turn on the components, i.e. *activate*
 them. We turn them off in the `release` method.
 
+### Making the Circle Object
+
 Let us now define the `Circle` object - the clickable object
 that we will clck to get points in the game.<br>
+Make a new file `src/game_objects/circle.py`.
 Before writing the code, let us draw a class diagram for the Circle class:
 
 <div align="center">
@@ -285,3 +290,37 @@ class Circle(pyv.EvListener):
         ev.screen.blit(img, img.get_rect(center=self.pos))
 
 ```
+
+### Adding the Label(s)
+
+The `Circle` method has been done, now we need to think of displaying the score
+and timer. Make a new file `src/game_objects/label.py` and add the following code:
+
+```python
+import pygame.font
+
+import pyved_engine as pyv
+
+
+class Label(pyv.EvListener):
+    def __init__(self, x, y, text, size, color, font='consolas', anchor='center'):
+        super().__init__()
+        self.pos = (x, y)
+        self.args = [size, color, font]
+        self.anchor = anchor
+        self.text = pygame.font.SysFont(font, size).render(text, True, color)
+
+    def get_rect(self):
+        rect = self.text.get_rect()
+        rect.__setattr__(self.anchor, self.pos)
+        rect.y -= 5
+        return rect
+
+    def update_text(self, text):
+        self.text = pygame.font.SysFont(self.args[2], self.args[0]).render(text, True, self.args[1])
+
+    def on_paint(self, ev):
+        ev.screen.blit(self.text, self.text.get_rect(**{self.anchor: self.pos}))
+
+```
+

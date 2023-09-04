@@ -1,7 +1,6 @@
 import pygame.font
 
 import pyved_engine as pyv
-import globals
 
 
 class Label(pyv.EvListener):
