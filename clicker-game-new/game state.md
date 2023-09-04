@@ -324,3 +324,108 @@ class Label(pyv.EvListener):
 
 ```
 
+This code is self-explanatory: we define a label class which inherits the
+`EventListener` type and define various methods for it.
+
+### Adding the Game Manager
+
+Now we have the Label and the Circle, but how do we manage the timeout? We can
+make another object for that called `GameManager`.
+Make a new file `src/game_objects/game_manager.py` and add the following code:
+
+```python
+import time
+
+import pyved_engine as pyv
+import globals
+
+from src.game_objects.label import Label
+
+
+class GameManager(pyv.EvListener):
+    def __init__(self):
+        super().__init__()
+        self.timer = time.time()
+        self.time_left = 15
+        self.timer_label = Label(20, 20, ":00", 60, "white", anchor="topleft")
+
+    def turn_on(self):
+        super().turn_on()
+        self.timer = time.time()
+        self.time_left = 15
+        self.timer_label.turn_on()
+
+    def turn_off(self):
+        super().turn_off()
+        self.timer_label.turn_off()
+
+    def on_score_update(self, ev):
+        globals.SharedVars.SCORE += ev.score
+
+    def on_update(self, ev):
+        self.time_left -= time.time() - self.timer
+        self.timer = time.time()
+        if self.time_left <= 0:
+            pyv.get_ev_manager().post(pyv.EngineEvTypes.StateChange, state_ident=globals.GameStates.Score)
+        t = int(self.time_left)
+        text = ":" + str(t).zfill(2)
+        self.timer_label.update_text(text)
+
+```
+
+
+The line `pyv.get_ev_manager().post(pyv.EngineEvTypes.StateChange, state_ident=globals.GameStates.Score)`
+is used to change the state to the `Score` state where we will display the final score and high score.
+
+Note that we added a `timer_label` Label as a child of this class. The good thing
+about EventListener objects is that one can add them in a hierarchical fashion without
+affecting anything.
+We have added a time counter of `15` seconds, and use the `time.time()` method
+for measuring the time difference.
+
+We also defined a method `on_score_update` which will be called when the
+`ScoreUpdate` event has been posted. When the method is called, we update the
+global Score variable.
+
+### Defining the `Game State` completely
+
+We have now defined all the required components for the `Game` state. Let us add
+them as components to the state.
+
+```python
+import pyved_engine as pyv
+
+from src.game_objects.background import ColorBackground
+from src.game_objects.circle import Circle
+from src.game_objects.label import Label
+from src.game_objects.game_manager import GameManager
+import globals
+
+
+class GameState(pyv.BaseGameState):
+    def __init__(self, ident):
+        super().__init__(ident)
+        self.components = [
+            ColorBackground(color="#36354A"),
+            Circle(),
+            GameManager(),
+            score_label := Label(480, 60, "0", 60, "white"),
+        ]
+        self.score_label = score_label
+        score_label.on_score_update = lambda ev: score_label.update_text(str(globals.SharedVars.SCORE))
+
+    def enter(self):
+        for i in self.components:
+            i.turn_on()
+        self.score_label.update_text(str(globals.SharedVars.SCORE))
+
+    def release(self):
+        for i in self.components:
+            i.turn_off()
+
+```
+
+The line: `score_label.on_score_update = lambda ev: score_label.update_text(str(globals.SharedVars.SCORE))
+` is used to dynamically assign the `on_score_update` method to the score_label.
+
+We now have the full Game State done.
