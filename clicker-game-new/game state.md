@@ -117,6 +117,7 @@ flowchart LR
 </div>
 
 The code for the structure can be written as follows in the `on_update` function:
+
 ```python
 def on_update(self, ev):
     match self.state:
@@ -147,11 +148,12 @@ def on_update(self, ev):
         case _:
             pass
 ```
+
 The details of the code is not relevant to this tutorial, so any other code
 can be used to achieve the same effect. The above code describes the
 flowchart we designed earlier.
 
-We will now need to define the `setup` function of the `Circle` class. This is what we use 
+We will now need to define the `setup` function of the `Circle` class. This is what we use
 to reset the circle to a new position once it is clicked.
 The setup function will spawn the circle at a random position across the screen.
 But for that we need to have access the screen dimensions.
@@ -159,6 +161,7 @@ With the **HD** mode of `pyved-engine`, the created display size is of the resol
 `960px X 720px`
 
 So the setup function will be like this:
+
 ```python
 
 def setup(self):
@@ -185,5 +188,100 @@ def on_mousedown(self, ev):
         self.pev(GameEvents.ScoreUpdate, score=-2)
 ```
 
-The `pev` method is basically an acronym for `post-event`
+The `pev` method is basically an acronym for `post-event`. When the circle
+is clicked, the object will notify the system that the score needs to be updated
+(and by how much)
 
+And finally, we need to define the `on_paint` method to draw the circle on the screen.
+
+```python
+def on_paint(self, ev):
+    img = pygame.transform.smoothscale_by(self.image, self.radius / self.max_radius)
+    self.current_img_radius = pygame.Vector2().distance_to(img.get_size()) * 0.4
+    ev.screen.blit(img, img.get_rect(center=self.pos))
+```
+
+Don't forget to add the necessary imports and define the `__init__` method.
+The full code for the `circle.py` file is:
+
+```python
+import random
+import time
+
+import pygame.draw
+
+import pyved_engine as pyv
+import globals
+
+from game.globals import GameEvents
+
+
+class Circle(pyv.EvListener):
+    def __init__(self):
+        super().__init__()
+        self.state = None
+        self.radius = None
+        self.max_radius = None
+        self.color = None
+        self.pos = None
+        self.image = None
+        self.current_img_radius = None
+
+    def turn_on(self):
+        super().turn_on()
+        self.setup()
+
+    def setup(self):
+        self.state = 'Start'
+        self.radius = 0
+        self.max_radius = 50
+        self.color = random.choice(['black', 'blue', 'grey', 'magenta', 'red'])
+        self.image = pygame.transform.smoothscale_by(pygame.image.load(f'assets/images/circle_{self.color}.png'), 0.5)
+        w, h = self.image.get_size()
+        self.pos = pygame.Vector2(
+            random.randint(w // 2, 960 - w // 2),
+            random.randint(h // 2, 720 - w // 2)
+        )
+
+    def on_update(self, ev):
+        match self.state:
+            case 'Start':
+                self.state = 'A'
+            case 'A':
+                dr = pygame.Vector2(self.radius, self.radius).lerp(
+                    pygame.Vector2(self.max_radius, self.max_radius), 0.25
+                )
+                self.radius = dr.x
+                if self.max_radius - self.radius <= 1:
+                    self.state = 'B'
+            case 'B':
+                self.radius -= 0.3
+                if self.radius <= 0:
+                    self.radius = 0
+                    pyv.get_ev_manager().post(pyv.EngineEvTypes.StateChange, state_ident=globals.GameStates.Score)
+            case 'C':
+                if self.radius > 1:
+                    dr = pygame.Vector2(self.radius, self.radius).lerp(
+                        pygame.Vector2(0, 0), 0.5
+                    )
+                    self.radius = dr.x
+                else:
+                    self.state = 'End'
+            case 'End':
+                self.setup()
+            case _:
+                pass
+
+    def on_mousedown(self, ev):
+        if ev.button == 1 and pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
+            self.state = 'C'
+            self.pev(GameEvents.ScoreUpdate, score=+3)
+        else:
+            self.pev(GameEvents.ScoreUpdate, score=-2)
+
+    def on_paint(self, ev):
+        img = pygame.transform.smoothscale_by(self.image, self.radius / self.max_radius)
+        self.current_img_radius = pygame.Vector2().distance_to(img.get_size()) * 0.4
+        ev.screen.blit(img, img.get_rect(center=self.pos))
+
+```

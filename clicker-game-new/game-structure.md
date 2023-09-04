@@ -19,14 +19,14 @@ Similarly, the entire structure of the game can be outlined by the following flo
 ```mermaid
 flowchart LR
     start((start)) --> Home[Home]
-    Home --> |play| Game
-    Home --> |quit| Stop((Stop))
-    Game --> |win| Win[Win]
-    Game --> |lose| Lose[Lose]
-    Win  --> |home| Home
-    Win  --> |quit| Stop
-    Lose --> |replay| Game
-    Lose --> |quit| Stop
+    Home -->|play| Game
+    Home -->|quit| Stop((Stop))
+    Game -->|win| Win[Win]
+    Game -->|lose| Lose[Lose]
+    Win -->|home| Home
+    Win -->|quit| Stop
+    Lose -->|replay| Game
+    Lose -->|quit| Stop
 ```
 
 *flowchart for the game structure*
@@ -59,6 +59,7 @@ graph TB
     BaseGameState --> Win
     BaseGameState --> Lose
 ```
+
 </div>
 
 ## The directory Structure
@@ -71,24 +72,25 @@ Let us make this folder structure in the root folder of your game:
 <div align="center">
 
 ```mermaid
-%%{ init : {"flowchart" : { "curve" : "stepAfter" }}}%%
+%%{ init: {"flowchart": { "curve": "stepAfter" }}}%%
 graph LR
-root[root folder] --> assets
+    root[root folder] --> assets
 
-root --> main.py
-root --> globals.py
-root --> src
+    root --> main.py
+    root --> globals.py
+    root --> src
 
-src --> states[game_states]
- 
-states --> home.py
-states --> game.py
-states --> win.py
-states --> lose.py
+    src --> states[game_states]
 
-src --> objects[game_objects]
+    states --> home.py
+    states --> game.py
+    states --> win.py
+    states --> lose.py
+
+    src --> objects[game_objects]
 
 ```
+
 </div>
 
 The `main.py` will be the entry point to our game. Running the `main.py` should run
@@ -113,3 +115,28 @@ This code will define the enums `Home`, `Game`,
 `Win` and `Lose`. This will help us map these names to
 their respective Game States later. So, we can just reference
 these states as `GameStates.Home`, `GameStates.Game`, etc.
+
+Since we already defined the `globals.py`, let us complete writing all definitions
+and declarations.
+Add the following code:
+
+```python
+GameEvents = pyv.game_events_enum((
+    'ScoreUpdate',
+))
+
+
+class SharedVars:
+    SCORE = 0
+    HIGH_SCORE = 0
+
+```
+
+The `GameEvents` variable is used to define the various custom events we can use in-game.
+For now, we have added the `ScoreUpdate` event to the list. This will be used
+later in the game to update the score based on the user's clicks.
+
+Along with that, we have the `SharedVars` class which will be used for storing the
+current Score and High Score. This acts like a singleton for global variables.
+
+
