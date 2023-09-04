@@ -3,10 +3,14 @@ import pyved_engine as pyv
 GameStates = pyv.struct.enum(
     'Home',
     'Game',
-    'Win',
-    'Lose',
+    'Score',
 )
 
+GameEvents = pyv.game_events_enum((
+    'ScoreUpdate',
+))
 
-class Config:
-    SCREEN_SIZE = None
+
+class SharedVars:
+    SCORE = 0
+    HIGH_SCORE = 0
