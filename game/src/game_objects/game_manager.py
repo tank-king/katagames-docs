@@ -10,13 +10,13 @@ class GameManager(pyv.EvListener):
     def __init__(self):
         super().__init__()
         self.timer = time.time()
-        self.time_left = 1
+        self.time_left = 15
         self.timer_label = Label(20, 20, ":00", 60, "white", anchor="topleft")
 
     def turn_on(self):
         super().turn_on()
         self.timer = time.time()
-        self.time_left = 1
+        self.time_left = 15
         self.timer_label.turn_on()
 
     def turn_off(self):
