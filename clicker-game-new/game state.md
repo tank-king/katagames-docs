@@ -147,6 +147,43 @@ def on_update(self, ev):
         case _:
             pass
 ```
-The details of the code is not related to this tutorial, so any other code
+The details of the code is not relevant to this tutorial, so any other code
 can be used to achieve the same effect. The above code describes the
 flowchart we designed earlier.
+
+We will now need to define the `setup` function of the `Circle` class. This is what we use 
+to reset the circle to a new position once it is clicked.
+The setup function will spawn the circle at a random position across the screen.
+But for that we need to have access the screen dimensions.
+With the **HD** mode of `pyved-engine`, the created display size is of the resolution
+`960px X 720px`
+
+So the setup function will be like this:
+```python
+
+def setup(self):
+    self.state = 'Start'
+    self.radius = 0
+    self.max_radius = 50
+    self.color = random.choice(['black', 'blue', 'grey', 'magenta', 'red'])
+    self.image = pygame.transform.smoothscale_by(pygame.image.load(f'assets/images/circle_{self.color}.png'), 0.5)
+    w, h = self.image.get_size()
+    self.pos = pygame.Vector2(
+        random.randint(w // 2, 960 - w // 2),
+        random.randint(h // 2, 720 - w // 2)
+    )
+```
+
+And, now we need to define what will happen when the mouse button is clicked.
+
+```python
+def on_mousedown(self, ev):
+    if ev.button == 1 and pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
+        self.state = 'C'
+        self.pev(GameEvents.ScoreUpdate, score=+3)
+    else:
+        self.pev(GameEvents.ScoreUpdate, score=-2)
+```
+
+The `pev` method is basically an acronym for `post-event`
+

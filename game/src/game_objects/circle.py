@@ -19,7 +19,6 @@ class Circle(pyv.EvListener):
         self.pos = None
         self.image = None
         self.current_img_radius = None
-        self.init_time = time.time()
 
     def turn_on(self):
         super().turn_on()
@@ -31,11 +30,10 @@ class Circle(pyv.EvListener):
         self.max_radius = 50
         self.color = random.choice(['black', 'blue', 'grey', 'magenta', 'red'])
         self.image = pygame.transform.smoothscale_by(pygame.image.load(f'assets/images/circle_{self.color}.png'), 0.5)
-        self.init_time = time.time()
         w, h = self.image.get_size()
         self.pos = pygame.Vector2(
-            random.randint(w // 2, globals.Config.SCREEN_SIZE.x - w // 2),
-            random.randint(h // 2, globals.Config.SCREEN_SIZE.y - w // 2)
+            random.randint(w // 2, 960 - w // 2),
+            random.randint(h // 2, 720 - w // 2)
         )
 
     def on_update(self, ev):
@@ -50,12 +48,10 @@ class Circle(pyv.EvListener):
                 if self.max_radius - self.radius <= 1:
                     self.state = 'B'
             case 'B':
-                # self.init_time = ev.curr_t
                 self.radius -= 0.3
                 if self.radius <= 0:
                     self.radius = 0
                     pyv.get_ev_manager().post(pyv.EngineEvTypes.StateChange, state_ident=globals.GameStates.Score)
-                    # self.state = 'C'
             case 'C':
                 if self.radius > 1:
                     dr = pygame.Vector2(self.radius, self.radius).lerp(
@@ -70,9 +66,7 @@ class Circle(pyv.EvListener):
                 pass
 
     def on_mousedown(self, ev):
-        # print([i for i in dir(ev) if not i.startswith('__')])
         if ev.button == 1 and pygame.Vector2(self.pos).distance_to(ev.pos) <= self.current_img_radius:
-            # print(pygame.Vector2(self.pos).distance_to(ev.pos))
             self.state = 'C'
             self.pev(GameEvents.ScoreUpdate, score=+3)
         else:
@@ -82,4 +76,3 @@ class Circle(pyv.EvListener):
         img = pygame.transform.smoothscale_by(self.image, self.radius / self.max_radius)
         self.current_img_radius = pygame.Vector2().distance_to(img.get_size()) * 0.4
         ev.screen.blit(img, img.get_rect(center=self.pos))
-        # pygame.draw.circle(ev.screen, self.color, self.pos, self.radius)

@@ -2,7 +2,7 @@ import pygame
 
 import pyved_engine as pyv
 
-from globals import GameStates, GameEvents, Config
+from globals import GameStates, GameEvents
 
 from src.game_states.home import HomeState
 from src.game_states.game import GameState
@@ -12,7 +12,6 @@ from src.game_states.score import ScoreState
 class Game(pyv.GameTpl):
     def enter(self, vms=None):
         super().enter(vms)
-        Config.SCREEN_SIZE = pygame.Vector2(pyv.get_surface().get_size())
 
     def get_video_mode(self):
         return pyv.HIGHRES_MODE
