@@ -106,13 +106,11 @@ import pyved_engine as pyv
 GameStates = pyv.struct.enum(
     'Home',
     'Game',
-    'Win',
-    'Lose',
+    'Score'
 )
 ```
 
-This code will define the enums `Home`, `Game`,
-`Win` and `Lose`. This will help us map these names to
+This code will define the enums `Home`, `Game` and `Score`. This will help us map these names to
 their respective Game States later. So, we can just reference
 these states as `GameStates.Home`, `GameStates.Game`, etc.
 

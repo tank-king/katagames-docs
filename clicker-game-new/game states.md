@@ -60,28 +60,13 @@ class HomeState(pyv.BaseGameState):
 
 ```
 
-### Win `win.py`
+### Win `score.py`
 
 ```python
 import pyved_engine as pyv
 
 
-class WinState(pyv.BaseGameState):
-    def enter(self):
-        pass
-
-    def release(self):
-        pass
-
-```
-
-### Lose `lose.py`
-
-```python
-import pyved_engine as pyv
-
-
-class LoseState(pyv.BaseGameState):
+class ScoreState(pyv.BaseGameState):
     def enter(self):
         pass
 
@@ -102,8 +87,7 @@ from globals import GameStates
 
 from src.game_states.home import HomeState
 from src.game_states.game import GameState
-from src.game_states.win import WinState
-from src.game_states.lose import LoseState
+from src.game_states import ScoreState
 
 
 class Game(pyv.GameTpl):
@@ -114,8 +98,7 @@ class Game(pyv.GameTpl):
         mapping = {
             GameStates.Home: HomeState,
             GameStates.Game: GameState,
-            GameStates.Win: WinState,
-            GameStates.Lose: LoseState
+            GameStates.Score: ScoreState,
         }
         return GameStates, mapping
 
