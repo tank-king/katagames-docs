@@ -6,7 +6,7 @@ import pygame.draw
 import pyved_engine as pyv
 import globals
 
-from game.globals import GameEvents
+from globals import GameEvents
 
 
 class Circle(pyv.EvListener):
